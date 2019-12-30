@@ -158,7 +158,7 @@ namespace VRTRIX
                 RH.SetThumbOffset(thumb_offset_R[1], VRTRIXBones.R_Thumb_2);
                 RH.SetThumbOffset(thumb_offset_R[2], VRTRIXBones.R_Thumb_3);
                 RH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
-                RH.SetThumbSlerpOffset(thumb_slerp_offset_R, HANDTYPE.RIGHT_HAND);
+                RH.SetThumbSlerpOffset(thumb_slerp_offset_R);
                 RH.SetFinalFingerSpacing(final_finger_spacing);
                 RH.SetFingerSpacing(finger_spacing);
                 RH_Gesture = GloveGesture.GestureDetection(RH, HANDTYPE.RIGHT_HAND);
@@ -189,7 +189,7 @@ namespace VRTRIX
                 LH.SetThumbOffset(thumb_offset_L[1], VRTRIXBones.L_Thumb_2);
                 LH.SetThumbOffset(thumb_offset_L[2], VRTRIXBones.L_Thumb_3);
                 LH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
-                LH.SetThumbSlerpOffset(thumb_slerp_offset_L, HANDTYPE.LEFT_HAND);
+                LH.SetThumbSlerpOffset(thumb_slerp_offset_L);
                 LH.SetFinalFingerSpacing(final_finger_spacing);
                 LH.SetFingerSpacing(finger_spacing);
                 LH_Gesture = GloveGesture.GestureDetection(LH, HANDTYPE.LEFT_HAND);
@@ -262,7 +262,7 @@ namespace VRTRIX
                     LH.SetThumbOffset(thumb_offset_L[1], VRTRIXBones.L_Thumb_2);
                     LH.SetThumbOffset(thumb_offset_L[2], VRTRIXBones.L_Thumb_3);
                     LH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
-                    LH.SetThumbSlerpOffset(thumb_slerp_offset_L, HANDTYPE.LEFT_HAND);
+                    LH.SetThumbSlerpOffset(thumb_slerp_offset_L);
                     LH.RegisterCallBack();
                     LH.StartStreaming();
                 }
@@ -274,7 +274,7 @@ namespace VRTRIX
                     RH.SetThumbOffset(thumb_offset_R[1], VRTRIXBones.R_Thumb_2);
                     RH.SetThumbOffset(thumb_offset_R[2], VRTRIXBones.R_Thumb_3);
                     RH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
-                    RH.SetThumbSlerpOffset(thumb_slerp_offset_R, HANDTYPE.RIGHT_HAND);
+                    RH.SetThumbSlerpOffset(thumb_slerp_offset_R);
                     RH.RegisterCallBack();
                     RH.StartStreaming();
                 }

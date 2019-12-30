@@ -273,23 +273,14 @@ namespace VRTRIX {
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void SetThumbSlerpRate(IntPtr sp, double slerp_proximal, double slerp_middle);
         /// <summary>
-        /// Set Left Hand Thumb Slerp Offset.
+        /// Set Thumb Slerp Offset.
         /// </summary>
         /// <param name="sp">The serial port object</param>
         /// <param name="offset_x">x-axis offset to set</param>
         /// <param name="offset_y">y-axis offset to set</param>
         /// <param name="offset_z">z-axis offset to set</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void SetLThumbSlerpOffset(IntPtr sp, double offset_x, double offset_y, double offset_z);
-        /// <summary>
-        /// Set Right Hand Thumb Slerp Offset.
-        /// </summary>
-        /// <param name="sp">The serial port object</param>
-        /// <param name="offset_x">x-axis offset to set</param>
-        /// <param name="offset_y">y-axis offset to set</param>
-        /// <param name="offset_z">z-axis offset to set</param>
-        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void SetRThumbSlerpOffset(IntPtr sp, double offset_x, double offset_y, double offset_z);
+        public static extern void SetThumbSlerpOffset(IntPtr sp, double offset_x, double offset_y, double offset_z);
         /// <summary>
         /// Set finger spacing when advanced mode is NOT enabled.
         /// </summary>
@@ -651,13 +642,9 @@ namespace VRTRIX {
          * \param offset Offset vector to set.
          * \param joint the specific thumb joint to set.
          */
-        public void SetThumbSlerpOffset(Vector3 offset, HANDTYPE type)
+        public void SetThumbSlerpOffset(Vector3 offset)
         {
-            switch (type)
-            {
-                case (HANDTYPE.LEFT_HAND): SetLThumbSlerpOffset(sp, offset.x, offset.y, offset.z); break;
-                case (HANDTYPE.RIGHT_HAND): SetRThumbSlerpOffset(sp, offset.x, offset.y, offset.z); break;
-            }
+            SetThumbSlerpOffset(sp, offset.x, offset.y, offset.z);
         }
 
         //! Set finger spacing when advanced mode is NOT enabled.
