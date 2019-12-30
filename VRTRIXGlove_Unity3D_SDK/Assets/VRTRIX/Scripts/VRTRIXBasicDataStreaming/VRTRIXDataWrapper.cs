@@ -51,9 +51,12 @@ namespace VRTRIX {
     /*! Supported hardware version, currently DK1, DK2 & PRO are supported. */
     public enum GLOVEVERSION
     {
-        DK1,
-        DK2,
-        PRO
+		DK1,
+		DK2,
+		PRO,
+		PRO7,
+		PRO11,
+		PRO12
     };
     
     //! Glove connection status.
@@ -269,6 +272,24 @@ namespace VRTRIX {
         /// <param name="slerp_middle">thumb middle joint slerp rate to set</param>
         [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void SetThumbSlerpRate(IntPtr sp, double slerp_proximal, double slerp_middle);
+        /// <summary>
+        /// Set Left Hand Thumb Slerp Offset.
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="offset_x">x-axis offset to set</param>
+        /// <param name="offset_y">y-axis offset to set</param>
+        /// <param name="offset_z">z-axis offset to set</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void SetLThumbSlerpOffset(IntPtr sp, double offset_x, double offset_y, double offset_z);
+        /// <summary>
+        /// Set Right Hand Thumb Slerp Offset.
+        /// </summary>
+        /// <param name="sp">The serial port object</param>
+        /// <param name="offset_x">x-axis offset to set</param>
+        /// <param name="offset_y">y-axis offset to set</param>
+        /// <param name="offset_z">z-axis offset to set</param>
+        [DllImport(ReaderImportor, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void SetRThumbSlerpOffset(IntPtr sp, double offset_x, double offset_y, double offset_z);
         /// <summary>
         /// Set finger spacing when advanced mode is NOT enabled.
         /// </summary>
@@ -552,11 +573,20 @@ namespace VRTRIX {
         /*! 
          * \param type Hand type of data glove
          */
-        public void OnCloseFingerAlignment(HANDTYPE type)
+        public void OnCloseFingerAlignment()
         {
             OnCloseFingerAlignment(sp);
         }
-        
+
+        //! Align current gesture to finger close pose, used for calibration when advanced mode is activated
+        /*! 
+         * \param type Hand type of data glove
+         */
+        public void OnOkPoseCalibration()
+        {
+            OnOkPoseAlignment(sp);
+        }
+
         //! Start data streaming of data glove
         public void StartStreaming()
         {
@@ -616,6 +646,19 @@ namespace VRTRIX {
             SetThumbSlerpRate(sp, slerp_proximal, slerp_middle);
         }
 
+        //! Set thumb slerp offset to achieve best performance for difference hand.
+        /*! 
+         * \param offset Offset vector to set.
+         * \param joint the specific thumb joint to set.
+         */
+        public void SetThumbSlerpOffset(Vector3 offset, HANDTYPE type)
+        {
+            switch (type)
+            {
+                case (HANDTYPE.LEFT_HAND): SetLThumbSlerpOffset(sp, offset.x, offset.y, offset.z); break;
+                case (HANDTYPE.RIGHT_HAND): SetRThumbSlerpOffset(sp, offset.x, offset.y, offset.z); break;
+            }
+        }
 
         //! Set finger spacing when advanced mode is NOT enabled.
         /*! 

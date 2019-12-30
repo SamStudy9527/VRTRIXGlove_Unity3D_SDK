@@ -185,7 +185,7 @@ namespace VRTRIX
                 m_LHand.GetComponent<Text>().text = "L_HAND:   " + glove3D.GetRotation(VRTRIXBones.L_Hand).ToString("F2");
                 m_LThumb.GetComponent<Text>().text = "L_THUMB:   " + glove3D.GetRotation(VRTRIXBones.L_Thumb_2).ToString("F2");
                 m_LIndex.GetComponent<Text>().text = "L_INDEX:   " + glove3D.GetRotation(VRTRIXBones.L_Index_2).ToString("F2");
-                m_LMiddle.GetComponent<Text>().text = "L_MIDDLE:   " + glove3D.GetRotation(VRTRIXBones.L_Index_2).ToString("F2");
+                m_LMiddle.GetComponent<Text>().text = "L_MIDDLE:   " + glove3D.GetRotation(VRTRIXBones.L_Middle_2).ToString("F2");
                 m_LRing.GetComponent<Text>().text = "L_RING:   " + glove3D.GetRotation(VRTRIXBones.L_Ring_2).ToString("F2");
                 m_LPinky.GetComponent<Text>().text = "L_PINKY:   " + glove3D.GetRotation(VRTRIXBones.L_Pinky_2).ToString("F2");
 
@@ -211,19 +211,7 @@ namespace VRTRIX
 
         public void OnSelectHardwareVersion(int index)
         {
-            if (index == 0)
-            {
-                glove3D.SetHardwareVersion(GLOVEVERSION.DK1);
-            }
-            else if (index == 1)
-            {
-                glove3D.SetHardwareVersion(GLOVEVERSION.DK2);
-            }
-            else if (index == 2)
-            {
-                glove3D.SetHardwareVersion(GLOVEVERSION.PRO);
-            }
-
+            glove3D.SetHardwareVersion(GLOVEVERSION.PRO11);
         }
         private static void RadioStrengthGUI(Image image, int radiostrength)
         {

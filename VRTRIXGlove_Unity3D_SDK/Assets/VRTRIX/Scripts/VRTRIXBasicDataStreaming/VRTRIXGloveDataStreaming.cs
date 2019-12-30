@@ -70,6 +70,12 @@ namespace VRTRIX
         //! Model mapping parameters for right thumb joint, used to tune thumb offset between the model and hardware sensor placement. Please read the sdk tutorial documentation to learn how to set this parameter properly.
         public Vector3[] thumb_offset_R = new Vector3[3];
 
+        //! Model mapping parameters for left thumb joint, used to tune thumb offset between the model and hardware sensor placement. Please read the sdk tutorial documentation to learn how to set this parameter properly.
+        public Vector3 thumb_slerp_offset_L;
+        
+        //! Model mapping parameters for right thumb joint, used to tune thumb offset between the model and hardware sensor placement. Please read the sdk tutorial documentation to learn how to set this parameter properly.
+        public Vector3 thumb_slerp_offset_R;
+
         //! Model mapping parameters for thumb proximal joint, used to tune thumb slerp algorithm parameter. Please read the sdk tutorial documentation to learn how to set this parameter properly.
         public double thumb_proximal_slerp;
 
@@ -152,6 +158,7 @@ namespace VRTRIX
                 RH.SetThumbOffset(thumb_offset_R[1], VRTRIXBones.R_Thumb_2);
                 RH.SetThumbOffset(thumb_offset_R[2], VRTRIXBones.R_Thumb_3);
                 RH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
+                RH.SetThumbSlerpOffset(thumb_slerp_offset_R, HANDTYPE.RIGHT_HAND);
                 RH.SetFinalFingerSpacing(final_finger_spacing);
                 RH.SetFingerSpacing(finger_spacing);
                 RH_Gesture = GloveGesture.GestureDetection(RH, HANDTYPE.RIGHT_HAND);
@@ -182,6 +189,7 @@ namespace VRTRIX
                 LH.SetThumbOffset(thumb_offset_L[1], VRTRIXBones.L_Thumb_2);
                 LH.SetThumbOffset(thumb_offset_L[2], VRTRIXBones.L_Thumb_3);
                 LH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
+                LH.SetThumbSlerpOffset(thumb_slerp_offset_L, HANDTYPE.LEFT_HAND);
                 LH.SetFinalFingerSpacing(final_finger_spacing);
                 LH.SetFingerSpacing(finger_spacing);
                 LH_Gesture = GloveGesture.GestureDetection(LH, HANDTYPE.LEFT_HAND);
@@ -217,24 +225,24 @@ namespace VRTRIX
 
             if (!IsVREnabled)
             {
-                if (GUI.Button(new Rect(0, Screen.height * (2.0f / 10.0f), Screen.width / 10, Screen.height / 10), "Align Fingers", buttonStyle))
+                if (GUI.Button(new Rect(0, Screen.height * (2.0f / 10.0f), Screen.width / 10, Screen.height / 10), "Trigger Haptic", buttonStyle))
                 {
-                    OnAlignFingers();
+                    OnVibrate();
                 }
 
                 if (GUI.Button(new Rect(0, Screen.height * (3.0f / 10.0f), Screen.width / 10, Screen.height / 10), "Save Calibration", buttonStyle))
                 {
                     OnHardwareCalibrate();
                 }
-    
-                if (GUI.Button(new Rect(0, Screen.height * (4.0f / 10.0f), Screen.width / 10, Screen.height / 10), "Trigger Haptic", buttonStyle))
+
+                if (GUI.Button(new Rect(0, Screen.height * (4.0f / 10.0f), Screen.width / 10, Screen.height / 10), "Close Finger Calibration", buttonStyle))
                 {
-                    OnVibrate();
+                    OnCloseFingerCalibration();
                 }
     
-                if (GUI.Button(new Rect(0, Screen.height * (5.0f / 10.0f), Screen.width / 10, Screen.height / 10), "Channel Hopping", buttonStyle))
+                if (GUI.Button(new Rect(0, Screen.height * (5.0f / 10.0f), Screen.width / 10, Screen.height / 10), "OK Pose Calibration", buttonStyle))
                 {
-                    OnChannelHopping();
+                    OnOkPoseCalibration();
                 }
             }
         }
@@ -254,6 +262,7 @@ namespace VRTRIX
                     LH.SetThumbOffset(thumb_offset_L[1], VRTRIXBones.L_Thumb_2);
                     LH.SetThumbOffset(thumb_offset_L[2], VRTRIXBones.L_Thumb_3);
                     LH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
+                    LH.SetThumbSlerpOffset(thumb_slerp_offset_L, HANDTYPE.LEFT_HAND);
                     LH.RegisterCallBack();
                     LH.StartStreaming();
                 }
@@ -265,6 +274,7 @@ namespace VRTRIX
                     RH.SetThumbOffset(thumb_offset_R[1], VRTRIXBones.R_Thumb_2);
                     RH.SetThumbOffset(thumb_offset_R[2], VRTRIXBones.R_Thumb_3);
                     RH.SetThumbSlerpRate(thumb_proximal_slerp, thumb_middle_slerp);
+                    RH.SetThumbSlerpOffset(thumb_slerp_offset_R, HANDTYPE.RIGHT_HAND);
                     RH.RegisterCallBack();
                     RH.StartStreaming();
                 }
@@ -389,19 +399,34 @@ namespace VRTRIX
             }
         }
 
-        //数据手套软件对齐四指。
+        //五指并拢校准手背平面。
         //! Align five fingers to closed gesture (only if advanced mode is set to true). Also align wrist to the game object chosen.
-        public void OnAlignFingers()
+        public void OnCloseFingerCalibration()
         {
             if (LH_Mode)
             {
-                LH.OnCloseFingerAlignment(HANDTYPE.LEFT_HAND);
+                LH.OnCloseFingerAlignment();
             }
             if (RH_Mode)
             {
-                RH.OnCloseFingerAlignment(HANDTYPE.RIGHT_HAND);
+                RH.OnCloseFingerAlignment();
             }
         }
+
+        //OK手势校准拇指
+        //! Switch radio channel of data glove. Only used for testing/debuging. Automatic channel switching is enabled by default in normal mode.
+        public void OnOkPoseCalibration()
+        {
+            if (LH_Mode)
+            {
+                LH.OnOkPoseCalibration();
+            }
+            if (RH_Mode)
+            {
+                RH.OnOkPoseCalibration();
+            }
+        }
+
 
         //程序退出
         //! Application quit operation. 
