@@ -5,6 +5,8 @@
 //
 //=============================================================================
 
+using UnityEngine;
+
 namespace VRTRIX
 {
     public enum VRTRIXGloveGesture
@@ -35,7 +37,7 @@ namespace VRTRIX
                 bool TeleportCheck = (RingAngle - MiddleAngle < -110f || RingAngle - MiddleAngle > 200) && (PinkyAngle - IndexAngle < -110f || PinkyAngle - IndexAngle > 200f);
                 bool PaperCheck = ((IndexAngle < 40f || IndexAngle > 330f) && (MiddleAngle < 40f || MiddleAngle > 330f)
                     && (RingAngle < 40f || RingAngle > 330f) && (PinkyAngle < 40f ||PinkyAngle > 330f)
-                    && (ThumbAngle > 20f && ThumbAngle < 90f));
+                    && (ThumbAngle > 10f && ThumbAngle < 90f));
                 //Debug.Log("ThumbAngle: " + ThumbAngle + ", IndexAngle: " + IndexAngle + ", MiddleAngle: " + MiddleAngle + ", RingAngle: " + RingAngle + ", PinkyAngle: " + PinkyAngle);
                 //Debug.Log("TeleportCheck1: " + (RingAngle - MiddleAngle) + ", TeleportCheck2: " + (PinkyAngle - IndexAngle));
                 if (ThumbCurve && MiddleCurve && RingCurve && PinkyCurve && !IndexCurve)
@@ -80,7 +82,7 @@ namespace VRTRIX
                 bool TeleportCheck = (RingAngle - MiddleAngle < -80f || RingAngle - MiddleAngle > 200) && (PinkyAngle - IndexAngle < -90f || PinkyAngle - IndexAngle > 210f);
                 bool PaperCheck = ((IndexAngle < 40f || IndexAngle > 330f) && (MiddleAngle < 40f || MiddleAngle > 330f)
                     && (RingAngle < 40f || RingAngle > 330f) && (PinkyAngle < 40f ||PinkyAngle > 330f)
-                    && (ThumbAngle > 20f && ThumbAngle < 90f));
+                    && (ThumbAngle > 10f && ThumbAngle < 90f));
                 //Debug.Log("ThumbAngle: " + ThumbAngle + ", IndexAngle: " + IndexAngle + ", MiddleAngle: " + MiddleAngle + ", RingAngle: " + RingAngle + ", PinkyAngle: " + PinkyAngle);
                 //Debug.Log("ThumbAngle: " + ThumbAngle + ", ThumbCurve: " + ThumbCurve);
                 if (ThumbCurve && MiddleCurve && RingCurve && PinkyCurve && !IndexCurve)
